@@ -1,0 +1,45 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+  background-color: #198754;
+  padding-bottom: 25px;
+}
+
+a {
+  color: #00B7FF;
+}
+
+p {
+  padding: 5%;
+  font-size: 32px;
+}
+
+p2 {
+  padding: 5%;
+  font-size: 12px;
+}
+
+.card {
+  margin: 0 auto; 
+  float: none; 
+  margin-left: 5%;      
+  margin-right: 18%;
+  margin-bottom: 10px;
+}
+
+textarea{
+  resize: none;
+  background: none;
+  border: none;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  outline: 0;
+}
+
+.fa-edit:hover{
+color: #198754c9
+}
+
+.fa-trash-alt:hover{
+color: #198754c9;
+}

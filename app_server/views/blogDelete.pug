@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    .card.text-success.bg-dark.mb-3(style="width: 30%;")
+      .card-body
+        form(method="post" action=`/delete/${blog._id}` id='deleteBlog')
+          h1(style= "font-size: 16px;text-decoration: underline;") Blog Title
+          textarea.text-success( readonly="" type="text" name="title" placeholder="" style=" width: 80%;") #{blog.title}
+          h2(style= "font-size: 16px;text-decoration: underline;") Blog Text 
+          textarea.text-success( readonly="" name="text" placeholder="" style="width: 80%;") #{blog.text}
+          
+        input.btn.btn-success.btn-sm.text-dark(input type="submit" form="deleteBlog" style="float: right;" value = "Delete")
+        a.btn.btn-success.btn-sm.text-dark(type= "button" href='/list' style= "float: left;") Cancel
+      script(src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js")

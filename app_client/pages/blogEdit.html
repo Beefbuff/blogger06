@@ -1,0 +1,17 @@
+<div ng-controller="EditController">
+  <head>
+    <title>{{vm.pageHeader.title}}</title>
+  </head> 
+    <div class="card text-success bg-dark mb-3" style="width: 30%;">
+      <div class="card-body">
+        <form name="userForm" ng-submit="vm.submit()" ng-controller="EditController">
+          <h1 style="font-size: 16px; text-decoration: underline;">Blog Title</h1>
+          <textarea class="text-success" type="text" name="title" placeholder="" style="width: 80%;">{{vm.blog.title}}</textarea>
+          <h2 style="font-size: 16px; text-decoration: underline;">Blog Text</h2>
+          <textarea class="text-success" type="text" name="text" placeholder="" style="width: 80%;">{{vm.blog.text}}</textarea>
+          <br>
+          <input class="btn btn-success btn-sm text-dark" type="submit" style="float: right;" value="Submit Blog">
+        </form>
+      </div>
+    </div>  
+</div>

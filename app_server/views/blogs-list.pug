@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  each blog in blogs
+    .card.text-success.bg-dark.mb-3(style="width: 30%;")
+      .card-body
+        h5.card-title #{blog.title}
+        p.card-text #{blog.text}
+        p2.card-text #{blog.createdOn}
+        ul.nav.justify-content-end.nav-pills.card-header-pills.text-primary
+          li.nav-item
+          a.nav-link(href=`/edit/${blog._id}` style="color: #198754")
+            i.fas.fa-edit
+          li.nav-item
+          a.nav-link(href=`/delete/${blog._id}` style="color: #198754;")
+            i.fas.fa-trash-alt
+
+
+
+      script(src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js")
+
+

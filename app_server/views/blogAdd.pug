@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    .card.text-success.bg-dark.mb-3(style="width: 30%;")
+      .card-body
+        form(method="post" action=`/add` id='addBlog')
+          h1(style= "font-size: 16px;text-decoration: underline;") Blog Title
+          textarea.text-success(type="text" name="title" placeholder="" style=" width: 80%;") Input Title
+          h2(style= "font-size: 16px;text-decoration: underline;") Blog Text 
+          textarea.text-success(name="text" placeholder="" style="width: 80%;") Input Text
+          br
+        input.btn.btn-success.btn-sm.text-dark(input type="submit" form="addBlog" style="float: right;" value = "Add Blog")
+
+      script(src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js")
