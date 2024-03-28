@@ -2,7 +2,7 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   min-height: 100vh;
   background-color: #198754;
-  padding-bottom: 25px;
+  padding-bottom: 20px;
 }
 
 a {
@@ -22,9 +22,10 @@ p2 {
 .card {
   margin: 0 auto; 
   float: none; 
-  margin-left: 5%;      
-  margin-right: 18%;
-  margin-bottom: 10px;
+  margin-left: 25%;      
+  margin-right: 25%;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 textarea{
