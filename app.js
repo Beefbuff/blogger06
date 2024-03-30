@@ -1,3 +1,4 @@
+require('dotenv').config({path:'./.env'});
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -6,7 +7,6 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 require('./app_api/models/db');
 var routesApi = require('./app_api/routes/index');
-require('dotenv').config();
 var passport = require('passport');
 require('./app_api/config/passport');
 
@@ -14,7 +14,6 @@ require('./app_api/config/passport');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'app_server/views'));
 app.set('view engine', 'pug');
 
 app.use(passport.initialize());

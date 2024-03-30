@@ -3,13 +3,9 @@
 <body>
     <base href="/">
     <!-- Navigation -->
-    <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
-        <form class="container-fluid justify-content-start">
-        <a class="btn btn-outline-success me-2" href="/">My Blog</a>
-        <a class="btn btn-outline-success me-2" href="/blog-list">List Blogs</a>
-        <a class="btn btn-outline-success me-2" href="/blog-add">Add Blog</a>
-        </form>
-    </nav>
+    <div ng-controller="NavigationController">
+        <navigation></navigation>  
+    </div>  	
     <!-- Angular Templates -->  
     <meta charset="utf-8">
     <script src="lib/angular.min.js"></script>

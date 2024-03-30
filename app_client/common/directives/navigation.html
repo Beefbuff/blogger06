@@ -1,0 +1,15 @@
+<!-- Navigation -->
+<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container-fluid">
+        <div class="justify-content-start">
+            <a class="btn btn-outline-success me-2" href="/">My Blog</a>
+            <a class="btn btn-outline-success me-2" href="/blog-list">List Blogs</a>
+            <a ng-show="vm.isLoggedIn()" class="btn btn-outline-success me-2" href="/blog-add">Add Blog</a>
+        </div>
+        <div class="justify-content-end" >
+            <a ng-show="!vm.isLoggedIn()"class="btn btn-outline-success me-2 " href="/register">Register</a>
+            <a ng-show="!vm.isLoggedIn()" class="btn btn-outline-success me-2" href="/login">Login</a>
+            <a ng-show="vm.isLoggedIn()" class="btn btn-outline-success me-2" href="" ng-click="vm.logout()">Logout <small>({{ vm.currentUser().email }})</small></a>
+        </div>
+    </div>
+</nav>

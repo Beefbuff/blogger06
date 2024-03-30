@@ -1,0 +1,30 @@
+<div ng-controller="RegisterController">
+  <head>
+    <title>{{vm.pageHeader.title}}</title>
+  </head> 
+  
+  <div class="card text-success bg-dark mb-3" style="width: 25%; margin-left: 37.5%;">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-sm-12">
+          <p class="lead">Already a member? Please <a href="/login?page={{vm.returnPage}}" style="color: #198754" onmouseover="this.style.color='#ffc107'" onmouseout="this.style.color='#198754'" >log in</a> instead.</p>
+          <form ng-submit="vm.onSubmit()">
+            <div role="alert" ng-show="vm.formError" style="background: none; border: none;" class="alert text-warning">{{ vm.formError }}</div>
+            <div class="form-group">
+              <label for="name">Full name</label>
+              <input type="text" class="form-control text-success border-success" style="background: none;" id="name" placeholder="Enter your name" ng-model="vm.credentials.name">
+            </div>
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control text-success border-success" style="background: none;" id="email" placeholder="Enter email" ng-model="vm.credentials.email">
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control text-success border-success" style="background: none;" id="password" placeholder="Password" ng-model="vm.credentials.password">
+            </div>
+            <button type="submit" class="btn btn-success btn-sm text-dark" style="float: right; margin-top: 10px; margin-bottom: 10px;">Register!</button>
+          </form>
+        </div>
+      </div>
+  </div>
+</div>

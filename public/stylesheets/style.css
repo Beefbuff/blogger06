@@ -44,3 +44,7 @@ color: #198754c9
 .fa-trash-alt:hover{
 color: #198754c9;
 }
+
+.form-control::placeholder {
+  color: #198754;
+}
