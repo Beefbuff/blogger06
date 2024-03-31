@@ -136,8 +136,8 @@ blogApp.controller('LoginController', [ '$http', '$location', 'authentication', 
     vm.returnPage = $location.search().page || '/';
 
     vm.onSubmit = function () {
-        vm.credentials.email=userForm.email.value;
-        vm.credentials.password=userForm.password.value;
+        vm.credentials.email = userForm.email.value;
+        vm.credentials.password = userForm.password.value;
       vm.formError = "";
       if (!vm.credentials.email || !vm.credentials.password) {
            vm.formError = "All fields required, please try again";
@@ -154,10 +154,9 @@ blogApp.controller('LoginController', [ '$http', '$location', 'authentication', 
         .then(function(){
           $location.search('page', null); 
           $location.path(vm.returnPage);
-        }),function errorCallBack(response){
-            var obj = err;
-          vm.formError = obj.message;
-        }
+        },function errorCallBack(response){
+          vm.formError = response.message;
+    });
     };
  }]);
 
@@ -190,13 +189,11 @@ blogApp.controller('RegisterController', [ '$http', '$location', 'authentication
       vm.formError = "";
       authentication
         .register(vm.credentials)
-        .error(function(err){
-          vm.formError = "Error registering. Try again with a different email address."
-          //vm.formError = err;
-        })
         .then(function(){
           $location.search('page', null); 
           $location.path(vm.returnPage);
+        }, function errorCallBack(response){
+            vm.formError = "Error registering. Try again with a different email address."
         });
     };
 }]);
@@ -230,9 +227,10 @@ blogApp.directive('navigation', function() {
 blogApp.service('authentication', authentication);
     authentication.$inject = ['$window', '$http'];
     function authentication ($window, $http) {
+        var vm = this;
     
         function saveToken (token) {
-            $window.localStorage.setItem('blog-token',token);
+            $window.localStorage['blog-token'] = token;
         };
                                        
         function getToken () {
@@ -241,21 +239,21 @@ blogApp.service('authentication', authentication);
         
         var register = function(user) {
             console.log('Registering user ' + user.email + ' ' + user.password);
-            return $http.post('/api/register', user).then(function successCallBack(data){
-                saveToken(data.token.value);
-          }),function errorCallBack(data){
+            return $http.post('/api/register', user).then(function successCallBack(response){
+                saveToken(response.data.token);
+          },function errorCallBack(error){
             vm.message = "failed to register";
-          }
+          });
         };
      
         var login = function(user) {
            console.log('Attempting to login user ' + user.email + ' ' + user.password);
            //$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
-            return $http.post('/api/login', user).then(function(data) {
-              saveToken(data.token);
-           }),function errorCallBack(data){
+            return $http.post('/api/login', user).then(function(response) {
+              saveToken(response.data.token);
+           },function errorCallBack(error){
             vm.message="Failed to login";
-           }
+           });
         };
         
         var logout = function() {

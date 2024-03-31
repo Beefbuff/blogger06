@@ -12,10 +12,10 @@ var ctrlAuth = require('../controllers/authentication');  // Lab 6
 
 /*API Routes*/
 router.get('/blogs', ctrlBlogList.blogsList);
-router.post('/blogs',auth,ctrlBlogList.blogsCreate); // lab 6
+router.post('/blogs',ctrlBlogList.blogsCreate); // lab 6
 router.get('/edit/:blogId',ctrlBlogList.blogsReadOne);
-router.put('/edit/:blogId',auth,ctrlBlogList.blogsUpdateOne); // lab 6
-router.delete('/delete/:blogId',auth,ctrlBlogList.blogsDeleteOne); // lab 6
+router.put('/edit/:blogId',ctrlBlogList.blogsUpdateOne); // lab 6
+router.delete('/delete/:blogId',ctrlBlogList.blogsDeleteOne); // lab 6
 router.post('/register',ctrlAuth.register);
 router.post('/login',ctrlAuth.login);
 
