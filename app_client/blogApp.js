@@ -38,6 +38,10 @@ blogApp.controller('ListController', ['$http', 'authentication', function ListCo
     vm.isLoggedIn = function () {
         return authentication.isLoggedIn();
     };
+    vm.isUser = function () {
+        return authentication.currentUser().email;
+    };
+    
     getAllBlogs($http)
         .then(function successCallBack(response) {
             vm.blogs = response.data;
@@ -116,8 +120,11 @@ blogApp.controller('AddController', ['$http', '$location', 'authentication', fun
         var data = {};
         data.title = userForm.title.value;
         data.text = userForm.text.value;
+        data.createdBy = {}
+        data.createdBy.userEmail = authentication.currentUser().email;
+        data.createdBy.name = authentication.currentUser().name;
         data.createOn = Date.now();
-
+        console.log(data);
         addBlog($http, data, authentication)
             .then(function successCallBack(response) {
                 vm.message = "Blog Added";

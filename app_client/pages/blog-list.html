@@ -14,17 +14,17 @@
           <!-- Blog text -->
           <p class="card-text">{{blog.text}}</p>
           <!-- Blog creation date -->
-          <p class="card-text2" style="font-size: 12px">{{blog.createdOn | date : 'MMM d, y h:mm a' }}</p>
+          <p class="card-text2" style="font-size: 12px">Published by: {{blog.createdBy.name}} on {{blog.createdOn | date : 'MMM d, y h:mm a' }}</p>
           <!-- Edit and delete buttons -->
           <ul class="nav justify-content-end nav-pills card-header-pills text-primary">
             <li class="nav-item">
               <!-- Edit button -->
-              <a ng-show="vm.isLoggedIn()" ng-Href="/blog-edit/{{blog._id}}" class="nav-link" style="color: #198754;"><i
+              <a ng-show="vm.isLoggedIn() && vm.isUser() == '{{blog.createdBy.userEmail}}'" ng-Href="/blog-edit/{{blog._id}}" class="nav-link" style="color: #198754;"><i
                   class="fas fa-edit"></i></a>
             </li>
             <li class="nav-item">
               <!-- Delete button -->
-              <a ng-show="vm.isLoggedIn()" ng-Href="/blog-delete/{{blog._id}}" class="nav-link"
+              <a ng-show="vm.isLoggedIn() && vm.isUser() == '{{blog.createdBy.userEmail}}'" ng-Href="/blog-delete/{{blog._id}}" class="nav-link"
                 style="color: #198754;"><i class="fas fa-trash-alt"></i></a>
             </li>
           </ul>

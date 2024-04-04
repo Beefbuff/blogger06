@@ -34,6 +34,7 @@ module.exports.blogsList = function (req, res) {
         _id: doc._id,
         title: doc.title,
         text: doc.text,
+        createdBy: doc.createdBy,
         createdOn: doc.createdOn
       });
     });
@@ -47,6 +48,7 @@ module.exports.blogsCreate = function (req, res) {
      .create({
         title: req.body.title,
         text: req.body.text,
+        createdBy: req.body.createdBy
        }, function(err, blog) {
          if (err) {
             console.log(err);
