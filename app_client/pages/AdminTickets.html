@@ -1,0 +1,127 @@
+<div ng-controller="AdminTicketController">
+
+    <head>
+        <title>{{vm.pageHeader.title}}</title>
+    </head>
+    <div class="container bg-dark" style="min-height: 100vh;">
+        <div class="row">
+            <div class="col ">
+                <h2 class="text-center text-success" style="text-decoration: underline;">Pending Tickets</h2>
+                <div class="block content">
+                    <div ng-repeat="ticket in vm.tickets">
+                        <div class="card text-success bg-dark mb-3 border border-success"
+                            ng-show="!ticket.resolved && ticket.assignedTo.userEmail==''">
+                            <div class="card-body">
+                                <!-- Blog title -->
+                                <h5 class="card-title" style="text-decoration: underline;">{{ticket.title}}</h5>
+                                <!-- Blog text -->
+                                <p class="card-text">{{ticket.details}}</p>
+                                <!-- Blog creation date -->
+                                <p class="card-text2" style="font-size: 12px">Ticket Created by:
+                                    {{ticket.createdBy.name}} on {{ticket.createdOn | date : 'MMM d, y h:mm a' }}</p>
+                                <!-- Edit and delete buttons -->
+                                <ul class="nav justify-content-end nav-pills card-header-pills text-primary">
+                                    <li class="nav-item">
+                                        <!-- Edit button -->
+                                        <button type="button" ng-show="vm.isLoggedIn()" class="btn btn-outline-success"
+                                            data-bs-toggle="modal" data-bs-target="#exampleModalCenter">modal</button>
+                                    </li>
+                                    <li class="nav-item">
+                                        <!-- Delete button -->
+                                        <a ng-show="vm.isLoggedIn()" ng-Href="/blog-delete/{{blog._id}}"
+                                            class="nav-link" style="color: #198754;"><i
+                                                class="fas fa-trash-alt"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h2 class="text-center text-success" style="text-decoration: underline;">Assigned Tickets</h2>
+                <div class="block content">
+                    <div ng-repeat="ticket in vm.tickets">
+                        <div class="card text-success bg-dark mb-3 border border-success"
+                            ng-show="!{{ticket.resolved}} && {{ticket.assignedTo.userEmail!=''}}">
+                            <div class="card-body">
+                                <!-- Blog title -->
+                                <h5 class="card-title" style="text-decoration: underline;">{{ticket.title}}</h5>
+                                <!-- Blog text -->
+                                <p class="card-text">{{ticket.details}}</p>
+                                <!-- Blog creation date -->
+                                <p class="card-text2" style="font-size: 12px">Ticket assigned to:
+                                    {{ticket.assignedTo.name}}</p>
+                                <!-- Edit and delete buttons -->
+                                <ul class="nav justify-content-end nav-pills card-header-pills text-primary">
+                                    <li class="nav-item">
+                                        <!-- Edit button -->
+                                        <a ng-show="vm.isLoggedIn() && vm.isUser() == '{{ticket.createdBy.userEmail}}'"
+                                            ng-Href="/blog-edit/{{blog._id}}" class="nav-link"
+                                            style="color: #198754;"><i class="fas fa-regular fa-edit"></i></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <!-- Delete button -->
+                                        <a ng-show="vm.isLoggedIn() && vm.isUser() == '{{ticket.createdBy.userEmail}}'"
+                                            ng-Href="/blog-delete/{{blog._id}}" class="nav-link"
+                                            style="color: #198754;"><i class="fas fa-trash-alt"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h2 class="text-center text-success" style="text-decoration: underline;">Resolved Tickets</h2>
+                <div class="block content">
+                    <div ng-repeat="ticket in vm.tickets">
+                        <div class="card text-success bg-dark mb-3 border border-success" ng-show="{{ticket.resolved}}">
+                            <div class="card-body">
+                                <!-- Blog title -->
+                                <h5 class="card-title" style="text-decoration: underline;">{{ticket.title}}</h5>
+                                <!-- Blog text -->
+                                <p class="card-text">{{ticket.details}}</p>
+                                <!-- Blog creation date -->
+                                <p class="card-text2" style="font-size: 12px">Ticket Created by:
+                                    {{ticket.createdBy.name}} on {{ticket.createdOn | date : 'MMM d, y h:mm a' }}</p>
+                                <!-- Edit and delete buttons -->
+                                <ul class="nav justify-content-end nav-pills card-header-pills text-primary">
+                                    <li class="nav-item">
+                                        <!-- Edit button -->
+                                        <a ng-show="vm.isLoggedIn() && vm.isUser() == '{{ticket.createdBy.userEmail}}'"
+                                            ng-Href="/blog-edit/{{blog._id}}" class="nav-link"
+                                            style="color: #198754;"><i class="fas fa-edit"></i></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <!-- Delete button -->
+                                        <a ng-show="vm.isLoggedIn() && vm.isUser() == '{{ticket.createdBy.userEmail}}'"
+                                            ng-Href="/blog-delete/{{blog._id}}" class="nav-link"
+                                            style="color: #198754;"><i class="fas fa-trash-alt"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark text-success">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Assign Ticket To A User</h5>
+                    </div>
+                    <div class="modal-body modal-body-border-success bg-dark text-success" >
+                        ...
+                    </div>
+                    <div class="modal-footer modal-footer-border-success bg-dark text-success">
+                        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-outline-success">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

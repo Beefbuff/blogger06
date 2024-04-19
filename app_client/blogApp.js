@@ -21,6 +21,11 @@ function deleteBlog($http, id, authentication) {
     return $http.delete('/api/delete/' + id, { headers: { Authorization: 'Bearer ' + authentication.getToken() } });
 }
 
+//API Ticket Functions
+function getAllTickets($http) {
+    return $http.get('/api/tickets');
+}
+
 //*** Controllers ***
 blogApp.controller('HomeController', function HomeController() {
     var vm = this;
@@ -227,6 +232,27 @@ blogApp.controller('NavigationController', ['$location', 'authentication', funct
     };
 }]);
 
+blogApp.controller('AdminTicketController', ['$http', 'authentication', function ListController($http,authentication) {
+    var vm = this;
+    vm.pageHeader = {
+        title: "Ticket Dashboard"
+    };
+    vm.isLoggedIn = function () {
+        return authentication.isLoggedIn();
+    };
+    vm.isUser = function () {
+        return authentication.currentUser().email;
+    };
+    
+    getAllTickets($http)
+        .then(function successCallBack(response) {
+            vm.tickets = response.data;
+            vm.message = "Ticket data found!";
+        }, function errorCallBack(response) {
+            vm.message = "Could not get list of open tickets";
+        });
+}]);
+
 //*** Directives ***
 blogApp.directive('navigation', function () {
     return {
@@ -292,7 +318,8 @@ function authentication($window, $http) {
             var payload = JSON.parse($window.atob(token.split('.')[1]));
             return {
                 email: payload.email,
-                name: payload.name
+                name: payload.name,
+                isAdmin: payload.isAdmin
             };
         }
     };
@@ -346,6 +373,11 @@ blogApp.config(function ($routeProvider, $locationProvider) {
         .when('/login', {
             templateUrl: 'pages/login.html',
             controller: 'LoginController',
+            controllerAs: 'vm'
+        })
+        .when('/AdminTickets', {
+            templateUrl: 'pages/AdminTickets.html',
+            controller: 'AdminTicketController',
             controllerAs: 'vm'
         })
         .otherwise({ redirectTo: '/' });

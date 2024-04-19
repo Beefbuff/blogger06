@@ -41,6 +41,7 @@ var userSchema = new mongoose.Schema({
       _id: this._id,
       email: this.email,
       name: this.name,
+      isAdmin: this.isAdmin,
       exp: parseInt(expiry.getTime() / 1000),
     }, process.env.JWT_SECRET);
   };
