@@ -6,6 +6,7 @@
             <a class="btn btn-outline-success me-2" href="/blog-list">List Blogs</a>
             <a ng-show="vm.isLoggedIn()" class="btn btn-outline-success me-2" href="/blog-add">Add Blog</a>
             <a ng-show="vm.isLoggedIn() && vm.currentUser().isAdmin" class="btn btn-outline-success me-2" href="/AdminTickets">Ticket Dashboard</a>
+            <a ng-show="vm.isLoggedIn() && vm.currentUser().isAdmin" class="btn btn-outline-success me-2" href="/AdminAddTicket">Add Ticket</a>
             <a ng-show="vm.isLoggedIn() && !vm.currentUser().isAdmin" class="btn btn-outline-success me-2" href="/UserTickets">Tickets</a>
         </div>
         <div class="justify-content-end" >

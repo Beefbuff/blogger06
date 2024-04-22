@@ -25,14 +25,14 @@ function deleteBlog($http, id, authentication) {
 function getAllTickets($http) {
     return $http.get('/api/tickets');
 }
+function addTicket($http, data) {
+    return $http.post('/api/Tickets/', data);
+}
 function getTicket($http, id) {
     return $http.get('/api/editTicket/' + id);
 }
 function assignTicket($http, id, data) {
     return $http.put('/api/assign/' + id, data);
-}
-function deleteTicket($http, id) {
-    return $http.delete('/api/deleteTicket/' + id);
 }
 function resolveTicket($http, id) {
     return $http.put('/api/resolve/' + id);
@@ -355,6 +355,40 @@ blogApp.controller('UserTicketController', ['$http', '$routeParams', '$location'
 
 }]);
 
+blogApp.controller('AdminAddTicketController', ['$http', '$routeParams', '$location', 'authentication', function ListController($http, $routeParams, $location, authentication) {
+    var vm = this;
+    vm.pageHeader = {
+        title: "Admin Add Ticket "
+    };
+    vm.isLoggedIn = function () {
+        return authentication.isLoggedIn();
+    };
+    vm.isUser = function () {
+        return authentication.currentUser().email;
+    };
+    vm.currentUser = function () {
+        return authentication.currentUser();
+    }
+
+    vm.add = function () {
+        var data ={};
+        data.title = userForm.title.value;
+        data.details = userForm.details.value;
+        data.resolved = false;
+        data.createdBy = { userEmail: this.currentUser().email, name: this.currentUser().name };
+        data.assignedTo={userEmail: "", name: ""};
+
+        addTicket($http, data)
+            .then(function successCallBack(response) {
+                vm.message = "Ticket Created";
+            }), function errorCallBack(response) {
+                vm.message = "Could not create ticket";
+            }
+        $location.path(['/AdminTickets']);
+    }
+
+}]);
+
 //*** Directives ***
 blogApp.directive('navigation', function () {
     return {
@@ -495,6 +529,11 @@ blogApp.config(function ($routeProvider, $locationProvider) {
         .when('/UserTicket/:id', {
             templateUrl: 'pages/userticket.html',
             controller: 'UserTicketController',
+            controllerAs: 'vm'
+        })
+        .when('/AdminAddTicket', {
+            templateUrl: 'pages/AdminAddTicket.html',
+            controller: 'AdminAddTicketController',
             controllerAs: 'vm'
         })
         .otherwise({ redirectTo: '/' });

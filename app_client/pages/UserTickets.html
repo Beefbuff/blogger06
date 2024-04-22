@@ -17,8 +17,8 @@
                                 <!-- Ticket text -->
                                 <p class="card-text">{{ticket.details}}</p>
                                 <!-- Ticket creation date -->
-                                <p class="card-text2" style="font-size: 12px">Ticket assigned to:
-                                    {{ticket.assignedTo.name}}</p>
+                                <p class="card-text2" style="font-size: 12px">Ticket Created by:
+                                    {{ticket.createdBy.name}} on {{ticket.createdOn | date : 'MMM d, y h:mm a' }}</p>
                                 <!-- Edit and delete buttons -->
                                 <ul class="nav justify-content-end nav-pills card-header-pills text-primary">
                                     <li class="nav-item">
@@ -45,9 +45,9 @@
                                 <p class="card-text">{{ticket.details}}</p>
                                 <!-- Ticket creation date -->
                                 <p class="card-text2" style="font-size: 12px">Ticket Created by:
-                                    {{ticket.createdBy.name}} on {{ticket.createdOn | date : 'MMM d, y h:mm a' }}</p><br>
+                                    {{ticket.createdBy.name}} on {{ticket.createdOn | date : 'MMM d, y h:mm a' }}</p>
                                 <!-- Ticket resolved date -->
-                                <p class="card-text2" style="font-size: 12px">Ticket Resolved on:{{ticket.createdOn |
+                                <p class="card-text2" style="font-size: 12px">Ticket Resolved on: {{ticket.resolvedOn |
                                     date : 'MMM d, y h:mm a' }}</p>
                             </div>
                         </div>
