@@ -23,14 +23,12 @@
                                 <ul class="nav justify-content-end nav-pills card-header-pills text-primary">
                                     <li class="nav-item">
                                         <!-- Edit button -->
-                                        <button type="button" ng-show="vm.isLoggedIn()" class="btn btn-outline-success"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModalCenter">modal</button>
-                                    </li>
                                     <li class="nav-item">
-                                        <!-- Delete button -->
-                                        <a ng-show="vm.isLoggedIn()" ng-Href="/blog-delete/{{blog._id}}"
-                                            class="nav-link" style="color: #198754;"><i
-                                                class="fas fa-trash-alt"></i></a>
+                                        <!-- Edit button -->
+                                        <a ng-show="vm.isLoggedIn()" class="nav-link" style="color: #198754;"
+                                            ng-href="/assign/{{ticket._id}}"><i
+                                                class="fas fa-regular fa-address-card"></i></a>
+                                    </li>
                                     </li>
                                 </ul>
                             </div>
@@ -52,21 +50,6 @@
                                 <!-- Blog creation date -->
                                 <p class="card-text2" style="font-size: 12px">Ticket assigned to:
                                     {{ticket.assignedTo.name}}</p>
-                                <!-- Edit and delete buttons -->
-                                <ul class="nav justify-content-end nav-pills card-header-pills text-primary">
-                                    <li class="nav-item">
-                                        <!-- Edit button -->
-                                        <a ng-show="vm.isLoggedIn() && vm.isUser() == '{{ticket.createdBy.userEmail}}'"
-                                            ng-Href="/blog-edit/{{blog._id}}" class="nav-link"
-                                            style="color: #198754;"><i class="fas fa-regular fa-edit"></i></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <!-- Delete button -->
-                                        <a ng-show="vm.isLoggedIn() && vm.isUser() == '{{ticket.createdBy.userEmail}}'"
-                                            ng-Href="/blog-delete/{{blog._id}}" class="nav-link"
-                                            style="color: #198754;"><i class="fas fa-trash-alt"></i></a>
-                                    </li>
-                                </ul>
                             </div>
                         </div>
                     </div>
@@ -78,50 +61,21 @@
                     <div ng-repeat="ticket in vm.tickets">
                         <div class="card text-success bg-dark mb-3 border border-success" ng-show="{{ticket.resolved}}">
                             <div class="card-body">
-                                <!-- Blog title -->
+                                <!-- Ticket title -->
                                 <h5 class="card-title" style="text-decoration: underline;">{{ticket.title}}</h5>
-                                <!-- Blog text -->
+                                <!-- Ticket text -->
                                 <p class="card-text">{{ticket.details}}</p>
-                                <!-- Blog creation date -->
+                                <!-- Ticket creation date -->
                                 <p class="card-text2" style="font-size: 12px">Ticket Created by:
-                                    {{ticket.createdBy.name}} on {{ticket.createdOn | date : 'MMM d, y h:mm a' }}</p>
-                                <!-- Edit and delete buttons -->
-                                <ul class="nav justify-content-end nav-pills card-header-pills text-primary">
-                                    <li class="nav-item">
-                                        <!-- Edit button -->
-                                        <a ng-show="vm.isLoggedIn() && vm.isUser() == '{{ticket.createdBy.userEmail}}'"
-                                            ng-Href="/blog-edit/{{blog._id}}" class="nav-link"
-                                            style="color: #198754;"><i class="fas fa-edit"></i></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <!-- Delete button -->
-                                        <a ng-show="vm.isLoggedIn() && vm.isUser() == '{{ticket.createdBy.userEmail}}'"
-                                            ng-Href="/blog-delete/{{blog._id}}" class="nav-link"
-                                            style="color: #198754;"><i class="fas fa-trash-alt"></i></a>
-                                    </li>
-                                </ul>
+                                    {{ticket.createdBy.name}} on {{ticket.createdOn | date : 'MMM d, y h:mm a' }}</p><br>
+                                    <!-- Ticket resolve date -->
+                                <p class="card-text2" style="font-size: 12px">Ticket Resolved by:
+                                    {{ticket.assignedTo.name}} on {{ticket.resolvedOn | date : 'MMM d, y h:mm a' }}</p>
+                                <a ng-Href="/UserTicket/{{ticket._id}}" class="nav-link" style="color: #198754;"><i
+                                        class="fas fa-regular fa-edit" Style="float:right;"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Modal -->
-        <div class="modal" id="exampleModalCenter" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-dark text-success" style="border-color: #198754" >
-                        <h5 class="modal-title" id="exampleModalLongTitle">Assign Ticket To A User</h5>
-                    </div>
-                    <div class="modal-body bg-dark text-success" >
-                        ...
-                    </div>
-                    <div class="modal-footer bg-dark text-success" style="border-color: #198754">
-                        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-outline-success">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>

@@ -9,6 +9,7 @@ var auth = jwt({   // Lab 6
 
 var ctrlBlogList = require('../controllers/blogs');
 var ctrlTicketList = require('../controllers/tickets');//lab 8
+var ctrlUsersList = require('../controllers/users');//lab 8
 var ctrlAuth = require('../controllers/authentication');  // Lab 6
 
 /*Blog API Routes*/
@@ -32,5 +33,8 @@ router.put('/re-open/:ticketId', ctrlTicketList.ticketsReOpenOne);// lab 8
 
 router.delete('/deleteTicket/:ticketId',ctrlTicketList.ticketsDeleteOne); // lab 8
 
+/*User API Routes */
+router.get('/users', ctrlUsersList.usersList); //lab 8
+router.get('/users/:userId', ctrlUsersList.usersReadOne); //lab 8
 
 module.exports = router;

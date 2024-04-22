@@ -1,0 +1,27 @@
+<div ng-controller="UserTicketController">
+
+    <head>
+        <title>{{vm.pageHeader.title}}</title>
+    </head>
+    <div class="card text-success bg-dark mb-3" style="width: 30%;">
+        <div class="card-body">
+            <form name="userForm" ng-submit="vm.submit()" ng-controller="UserTicketController">
+                <h1 style="font-size: 16px; text-decoration: underline;">Ticket Title</h1>
+                <textarea readonly="" class="text-success" type="text" name="title" placeholder=""
+                    style="width: 80%;">{{vm.ticket.title}}</textarea>
+                <h2 style="font-size: 16px; text-decoration: underline;">Ticket details</h2>
+                <textarea readonly="" class="text-success" type="text" name="text" placeholder=""
+                    style="width: 80%;">{{vm.ticket.details}}</textarea>
+                <br>
+                <input ng-show="!vm.currentUser().isAdmin" class="btn btn-success btn-sm text-dark" type="submit"
+                    style="float: right;" value="Resolve">
+            </form>
+            <div><a ng-show="vm.currentUser().isAdmin" ng-click="vm.reOpen()" class="btn btn-success btn-sm text-dark"
+                    type="button" href="/AdminTickets" style="float: right;">Re-Open</a></div>
+            <div><a ng-show="!vm.currentUser().isAdmin" class="btn btn-success btn-sm text-dark" type="button" href="/UserTickets"
+                    style="float: left;">Cancel</a></div>
+            <div><a ng-show="vm.currentUser().isAdmin" class="btn btn-success btn-sm text-dark" type="button" href="/AdminTickets"
+                    style="float: left;">Cancel</a></div>
+        </div>
+    </div>
+</div>

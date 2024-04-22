@@ -45,6 +45,10 @@ color: #198754c9
 color: #198754c9;
 }
 
+.fa-address-card:hover{
+  color: #198754c9;
+  }
+
 .form-control::placeholder {
   color: #198754;
 }

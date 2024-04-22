@@ -25,6 +25,30 @@ function deleteBlog($http, id, authentication) {
 function getAllTickets($http) {
     return $http.get('/api/tickets');
 }
+function getTicket($http, id) {
+    return $http.get('/api/editTicket/' + id);
+}
+function assignTicket($http, id, data) {
+    return $http.put('/api/assign/' + id, data);
+}
+function deleteTicket($http, id) {
+    return $http.delete('/api/deleteTicket/' + id);
+}
+function resolveTicket($http, id) {
+    return $http.put('/api/resolve/' + id);
+}
+function reOpenTicket($http, id) {
+    return $http.put('/api/re-open/' + id);
+}
+
+//API User Functions
+function getAllUsers($http) {
+    return $http.get('/api/users');
+}
+function getUser($http, id) {
+    return $http.get('/api/tickets/' + id);
+}
+
 
 //*** Controllers ***
 blogApp.controller('HomeController', function HomeController() {
@@ -46,7 +70,7 @@ blogApp.controller('ListController', ['$http', 'authentication', function ListCo
     vm.isUser = function () {
         return authentication.currentUser().email;
     };
-    
+
     getAllBlogs($http)
         .then(function successCallBack(response) {
             vm.blogs = response.data;
@@ -232,7 +256,7 @@ blogApp.controller('NavigationController', ['$location', 'authentication', funct
     };
 }]);
 
-blogApp.controller('AdminTicketController', ['$http', 'authentication', function ListController($http,authentication) {
+blogApp.controller('AdminTicketController', ['$http', '$routeParams', '$location', 'authentication', function ListController($http, $routeParams, $location, authentication) {
     var vm = this;
     vm.pageHeader = {
         title: "Ticket Dashboard"
@@ -243,7 +267,10 @@ blogApp.controller('AdminTicketController', ['$http', 'authentication', function
     vm.isUser = function () {
         return authentication.currentUser().email;
     };
-    
+    vm.currentUser = function () {
+        return authentication.currentUser();
+    }
+
     getAllTickets($http)
         .then(function successCallBack(response) {
             vm.tickets = response.data;
@@ -251,6 +278,81 @@ blogApp.controller('AdminTicketController', ['$http', 'authentication', function
         }, function errorCallBack(response) {
             vm.message = "Could not get list of open tickets";
         });
+
+    getAllUsers($http)
+        .then(function successCallBack(response) {
+            vm.users = response.data;
+            vm.message = "User data found!";
+        }, function errorCallBack(response) {
+            vm.message = "Could not get list of Users";
+        });
+    vm.deleteTicket = function () {
+        $location.path(['/AdminTickets']);
+        deleteTicket($http, $routeParams.id)
+            .then(function successCallBack(response) {
+                vm.message = "Ticket Deleted!";
+            }), function errorCallBack(response) {
+                vm.message = "Failed to delete Ticket";
+            }
+    }
+
+    vm.submit = function () {
+        var data = document.getElementById("userSelect").value;
+        data = data.split(',');
+        var tempAssign = { "assignedTo": { "userEmail": data[0], "name": data[1] } };
+
+        assignTicket($http, $routeParams.id, tempAssign)
+            .then(function successCallBack(response) {
+                vm.message = "Ticket Assigned";
+            }), function errorCallBack(response) {
+                vm.message = "Could not assign ticket";
+            }
+        $location.path(['/AdminTickets']);
+    }
+
+}]);
+
+blogApp.controller('UserTicketController', ['$http', '$routeParams', '$location', 'authentication', function ListController($http, $routeParams, $location, authentication) {
+    var vm = this;
+    vm.pageHeader = {
+        title: "User Ticket Dashboard"
+    };
+    vm.isLoggedIn = function () {
+        return authentication.isLoggedIn();
+    };
+    vm.isUser = function () {
+        console.log(authentication.currentUser().email);
+        return authentication.currentUser().email;
+    };
+    vm.currentUser = function () {
+        return authentication.currentUser();
+    }
+
+    getTicket($http, $routeParams.id)
+        .then(function successCallBack(response) {
+            vm.message = "Ticket Found";
+            vm.ticket = response.data;
+        }), function errorCallBack(response) {
+            vm.message = "Could not find ticket";
+        }
+    vm.reOpen = function () {
+        reOpenTicket($http, $routeParams.id)
+            .then(function successCallBack(response) {
+                vm.message = "Ticket Re-opened";
+            }), function errorCallBack(response) {
+                vm.message = "Could not re-open ticket";
+            }
+    }
+    vm.submit = function () {
+        resolveTicket($http, $routeParams.id)
+            .then(function successCallBack(response) {
+                vm.message = "Ticket Assigned";
+            }), function errorCallBack(response) {
+                vm.message = "Could not assign ticket";
+            }
+        $location.path(['/UserTickets']);
+    }
+
 }]);
 
 //*** Directives ***
@@ -378,6 +480,21 @@ blogApp.config(function ($routeProvider, $locationProvider) {
         .when('/AdminTickets', {
             templateUrl: 'pages/AdminTickets.html',
             controller: 'AdminTicketController',
+            controllerAs: 'vm'
+        })
+        .when('/assign/:id', {
+            templateUrl: 'pages/Ticket.html',
+            controller: 'AdminTicketController',
+            controllerAs: 'vm'
+        })
+        .when('/UserTickets', {
+            templateUrl: 'pages/UserTickets.html',
+            controller: 'AdminTicketController',
+            controllerAs: 'vm'
+        })
+        .when('/UserTicket/:id', {
+            templateUrl: 'pages/userticket.html',
+            controller: 'UserTicketController',
             controllerAs: 'vm'
         })
         .otherwise({ redirectTo: '/' });

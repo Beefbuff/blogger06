@@ -1,0 +1,32 @@
+<form name="userForm" ng-submit="vm.submit()" ng-controller="AdminTicketController">
+    <div class="content">
+        <div class="card text-success bg-dark mb-3" style="width: 25%; text-align: center;margin-left: 37%;">
+            <h5 class="title" style="text-align: center;">Assign Ticket To A User</h5>
+            <div class="body bg-dark text-success">
+                <div class="block content" style="text-align: center;">
+                    <select name="userSelect" id="userSelect" ng-model="data.userSelect" multiple
+                        style="background: #198754;width:90%">
+                        <option ng-repeat="user in vm.users" ng-if="!user.isAdmin"
+                            value="{{user.email}},{{user.name}},{{user._id}}">
+                            {{user.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="footer bg-dark text-success" style="padding-top: 5px;">
+                <input class="btn btn-success btn-sm text-dark" type="submit" style="float: right;margin: 5px;"
+                    value="Assign Ticket">
+                    
+                <a class="btn btn-success btn-sm text-dark" ng-click="vm.deleteTicket()" style="float: center;margin: 5px;" >Delete Ticket</a>
+                <a ng-show="vm.isLoggedIn()" class="btn btn-success btn-sm text-dark " style="float: left; margin: 5px;"
+                    href="/AdminTickets">close</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<li class="nav-item">
+    <!-- Delete button -->
+    <a ng-show="vm.isLoggedIn()" ng-Href="/blog-delete/{{blog._id}}" class="nav-link" style="color: #198754;"><i
+            class="fas fa-trash-alt"></i></a>
+</li>
