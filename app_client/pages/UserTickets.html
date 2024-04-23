@@ -8,7 +8,7 @@
             <div class="col">
                 <h2 class="text-center text-success" style="text-decoration: underline;">My Assigned Tickets</h2>
                 <div class="block content">
-                    <div ng-repeat="ticket in vm.tickets" ng-show="vm.isUser() == '{{ticket.assignedTo.userEmail}}'">
+                    <div ng-repeat="ticket in vm.tickets" ng-show="vm.currentUser().email == '{{ticket.assignedTo.userEmail}}'">
                         <div class="card text-success bg-dark mb-3 border border-success"
                             ng-show="!{{ticket.resolved}} && {{ticket.assignedTo.userEmail!=''}}">
                             <div class="card-body">

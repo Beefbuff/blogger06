@@ -31,6 +31,9 @@ function addTicket($http, data) {
 function getTicket($http, id) {
     return $http.get('/api/editTicket/' + id);
 }
+function deleteTicket($http, id) {
+    return $http.delete('/api/deleteTicket/' + id);
+}
 function assignTicket($http, id, data) {
     return $http.put('/api/assign/' + id, data);
 }
@@ -256,7 +259,7 @@ blogApp.controller('NavigationController', ['$location', 'authentication', funct
     };
 }]);
 
-blogApp.controller('AdminTicketController', ['$http', '$routeParams', '$location', 'authentication', function ListController($http, $routeParams, $location, authentication) {
+blogApp.controller('AdminTicketController', ['$http', '$routeParams', '$location','$interval', '$scope','authentication', function AdminTicketController($http, $routeParams, $location,$interval, $scope,authentication) {
     var vm = this;
     vm.pageHeader = {
         title: "Ticket Dashboard"
@@ -309,10 +312,27 @@ blogApp.controller('AdminTicketController', ['$http', '$routeParams', '$location
             }
         $location.path(['/AdminTickets']);
     }
+    $scope.callAtInterval = function (){
+        getAllTickets($http)
+        .then(function successCallBack(response) {
+            vm.tickets = response.data;
+            vm.message = "Ticket data found!";
+        }, function errorCallBack(response) {
+            vm.message = "Could not get list of open tickets";
+        });
 
+    getAllUsers($http)
+        .then(function successCallBack(response) {
+            vm.users = response.data;
+            vm.message = "User data found!";
+        }, function errorCallBack(response) {
+            vm.message = "Could not get list of Users";
+        });
+    }
+    $interval(function() {$scope.callAtInterval();},8000,0,true);
 }]);
 
-blogApp.controller('UserTicketController', ['$http', '$routeParams', '$location', 'authentication', function ListController($http, $routeParams, $location, authentication) {
+blogApp.controller('UserTicketController', ['$http', '$routeParams', '$location','$interval','authentication', function UserTicketController($http, $routeParams, $location,$interval,authentication) {
     var vm = this;
     vm.pageHeader = {
         title: "User Ticket Dashboard"
@@ -352,10 +372,9 @@ blogApp.controller('UserTicketController', ['$http', '$routeParams', '$location'
             }
         $location.path(['/UserTickets']);
     }
-
 }]);
 
-blogApp.controller('AdminAddTicketController', ['$http', '$routeParams', '$location', 'authentication', function ListController($http, $routeParams, $location, authentication) {
+blogApp.controller('AdminAddTicketController', ['$http', '$routeParams', '$location','authentication', function AdminAddTicketController($http, $routeParams, $location, authentication) {
     var vm = this;
     vm.pageHeader = {
         title: "Admin Add Ticket "
@@ -541,4 +560,4 @@ blogApp.config(function ($routeProvider, $locationProvider) {
 });
 angular
     .module('blogApp')
-    .config(['$routeProvider', '$locationProvider', blogApp.config]);
+    .config(['$routeProvider', '$locationProvider',blogApp.config]);
